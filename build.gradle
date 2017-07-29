@@ -34,6 +34,8 @@ subprojects {
 		}
 	}
 	
+	// workaround for Java compiler bug that crashes JVM during the compilation,
+	// if the directory with generated sources already exists: 
 	task cleanGeneratedSources (type: Delete) {
 		delete 'build/generated/source/apt/main'
 	}

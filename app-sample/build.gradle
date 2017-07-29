@@ -1,5 +1,6 @@
 dependencies {
 	compile project(':framework-core')
 	compile project(':framework-first-extension')
+	compile project(':framework-second-extension')
 	compile project(':framework-third-extension')
 }

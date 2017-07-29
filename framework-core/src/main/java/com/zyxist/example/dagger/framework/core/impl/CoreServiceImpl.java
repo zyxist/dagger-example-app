@@ -1,16 +1,20 @@
 package com.zyxist.example.dagger.framework.core.impl;
 
 import com.zyxist.example.dagger.framework.core.api.CoreService;
+import com.zyxist.example.dagger.framework.core.api.SamplePlugin;
 import com.zyxist.example.dagger.framework.core.api.SecondExtensionPoint;
 import java.util.Objects;
+import java.util.Set;
 import javax.inject.Inject;
 
 public class CoreServiceImpl implements CoreService {
 	private final SecondExtensionPoint extension;
+	private final Set<SamplePlugin> plugins;
 	
 	@Inject
-	public CoreServiceImpl(SecondExtensionPoint ext) {
+	public CoreServiceImpl(SecondExtensionPoint ext, Set<SamplePlugin> plugins) {
 		this.extension = Objects.requireNonNull(ext);
+		this.plugins = Objects.requireNonNull(plugins);
 	}
 	
 	@Override
@@ -19,7 +23,13 @@ public class CoreServiceImpl implements CoreService {
 		return 4;
 	}
 	
+	@Override
 	public String doSomethingInteresting() {
-		return "foo " + extension.doSomething();
+		StringBuilder builder = new StringBuilder("(");
+		for (SamplePlugin plugin: plugins) {
+			builder.append(plugin.sayHello()).append(", ");
+		}
+		builder.append(")");
+		return "foo " + extension.doSomething() + builder.toString();
 	}
 }

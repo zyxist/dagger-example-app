@@ -10,6 +10,11 @@ import dagger.Binds;
 import dagger.Module;
 import javax.inject.Singleton;
 
+/**
+ * In Dagger, modules define what implementations are bound to particular interfaces. By using
+ * <tt>Binds</tt> annotation, we tell Dagger to detect, how to construct a particular instance
+ * automatically.
+ */
 @Module
 public abstract class FrameworkCoreModule {
 	@Binds
