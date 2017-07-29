@@ -1,0 +1,3 @@
+rootProject.name = 'dagger-example-app'
+
+include 'framework-core', 'framework-first-extension', 'framework-second-extension', 'framework-third-extension', 'app-sample'
