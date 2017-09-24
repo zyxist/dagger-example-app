@@ -1,29 +1,37 @@
 buildscript {
 	repositories {
+		plugins
 		mavenCentral()
 		maven {
 			url "https://plugins.gradle.org/m2/"
 		}
 	}
 	dependencies {
-		classpath "net.ltgt.gradle:gradle-apt-plugin:0.10"
+		classpath "net.ltgt.gradle:gradle-apt-plugin:0.12"
 	}
+}
+plugins {
+	id "org.gradle.java.experimental-jigsaw" version "0.1.1"
 }
 
 subprojects {
 	apply plugin: 'java'
 	apply plugin: 'idea'
 	apply plugin: 'net.ltgt.apt'
+	apply plugin: 'org.gradle.java.experimental-jigsaw'
+
 	
 	group = 'com.zyxist.example.dagger'
 	version = '1.0-SNAPSHOT'
 	
-	sourceCompatibility = '1.8'
-	targetCompatibility = '1.8'
+	sourceCompatibility = '1.9'
+	targetCompatibility = '1.9'
 	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 	
 	compileJava {
 		options.compilerArgs << "-Xlint:unchecked"
+		options.compilerArgs << "--add-modules"
+		options.compilerArgs << "java.compiler"
 	}
 	
 	sourceSets {
@@ -48,6 +56,7 @@ subprojects {
 
 	dependencies {
 		compile 'com.google.dagger:dagger:2.11'
+		compile 'com.google.guava:guava:23.0'
 		apt 'com.google.dagger:dagger-compiler:2.11'
 	}
 }
