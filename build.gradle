@@ -1,6 +1,5 @@
 buildscript {
 	repositories {
-		plugins
 		mavenCentral()
 		maven {
 			url "https://plugins.gradle.org/m2/"
@@ -10,28 +9,28 @@ buildscript {
 		classpath "net.ltgt.gradle:gradle-apt-plugin:0.12"
 	}
 }
+
 plugins {
-	id "org.gradle.java.experimental-jigsaw" version "0.1.1"
+	id 'com.zyxist.chainsaw' version '0.1.3'
 }
 
 subprojects {
 	apply plugin: 'java'
 	apply plugin: 'idea'
+	apply plugin: 'com.zyxist.chainsaw'
 	apply plugin: 'net.ltgt.apt'
-	apply plugin: 'org.gradle.java.experimental-jigsaw'
 
-	
 	group = 'com.zyxist.example.dagger'
 	version = '1.0-SNAPSHOT'
 	
 	sourceCompatibility = '1.9'
 	targetCompatibility = '1.9'
 	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+	javaModule.patchModules 'com.google.code.findbugs:jsr305': 'javax.annotation:jsr250-api'
 	
 	compileJava {
 		options.compilerArgs << "-Xlint:unchecked"
-		options.compilerArgs << "--add-modules"
-		options.compilerArgs << "java.compiler"
 	}
 	
 	sourceSets {
@@ -50,13 +49,17 @@ subprojects {
 	compileJava.dependsOn cleanGeneratedSources
 
 	repositories {
-		mavenLocal()
 		mavenCentral()
 	}
 
 	dependencies {
+		patch 'com.google.code.findbugs:jsr305:1.3.9'
+
 		compile 'com.google.dagger:dagger:2.11'
 		compile 'com.google.guava:guava:23.0'
+		compile 'javax.annotation:jsr250-api:1.0'
+
 		apt 'com.google.dagger:dagger-compiler:2.11'
+		apt 'javax.annotation:jsr250-api:1.0'
 	}
 }

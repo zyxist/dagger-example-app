@@ -1,5 +1,10 @@
 */build/**
 */gradle/**
+*/out/**
 */.nb-gradle/**
 /.gradle/**
 /.nb-gradle/**
+/.idea/**
+/build/**
+/out/**
+*.iml

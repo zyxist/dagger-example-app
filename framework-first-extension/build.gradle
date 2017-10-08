@@ -1,3 +1,5 @@
+javaModule.name = 'com.zyxist.example.dagger.framework.first'
+
 dependencies {
 	compile project(':framework-core')
 }
